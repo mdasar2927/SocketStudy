@@ -57,54 +57,41 @@ Socket programming finds applications in various domains, including web developm
 ```
 import socket
 
-# Create a socket object
-client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s = socket.socket()
 
-# Connect to the server
-client_socket.connect(('localhost', 8000))
+s.connect(('localhost', 8000))
 
-# Print the client's socket name
-print(f"Client connected from: {client_socket.getsockname()}")
+while True:
+    print(s.recv(1024).decode())
 
-# Receive a message from the server
-server_message = client_socket.recv(1024).decode()
-print(f"Received from server: {server_message}")
-
-# Send a message to the server
-client_socket.send("Acknowledgement received from the client.".encode())
-
-# Close the connection
-client_socket.close()
+    s.send("Acknowledgement Received".encode())
 
 ```
 ## server.py
 ```
 import socket
 
-# Create a socket object
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s = socket.socket()
 
-# Bind the socket to the host and port
-server_socket.bind(('localhost', 8000))
+s.bind(('localhost', 8000))
+s.listen(5)
 
-# Listen for incoming connections (max 1 connection)
-server_socket.listen(1)
-print("Server is waiting for a connection...")
+print("Server listening on localhost:8000")
 
-# Accept the connection
-conn, addr = server_socket.accept()
-print(f"Connected by {addr}")
+c, addr = s.accept()
 
-# Send a message to the client
-conn.send("Hello from the server!".encode())
+while True:
+    i = input("Enter a data: ")
 
-# Receive a message from the client
-data = conn.recv(1024)
-print(f"Received from client: {data.decode()}")
+    c.send(i.encode())
 
-# Close the connection
-conn.close()
-server_socket.close()
+    ack = c.recv(1024).decode()
+
+    if ack:
+        print(ack)
+    else:
+        c.close()
+        break
 
 ```
 ## Output
