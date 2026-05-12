@@ -109,10 +109,10 @@ server_socket.close()
 ```
 ## Output
 
-Client:
+## Client:
 <img width="512" height="142" alt="image" src="https://github.com/user-attachments/assets/9e171dd7-8114-4da0-a67d-1da197f5b2b6" />
 
-Server:
+## Server:
 <img width="509" height="147" alt="image" src="https://github.com/user-attachments/assets/562321d7-c726-43d8-822d-cb864c2a4ee5" />
 
 ## Result:
